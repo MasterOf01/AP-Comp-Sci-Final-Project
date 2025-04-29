@@ -20,8 +20,8 @@ droprates={
 player_collection={}
 def wait_exit():
     while True:
-        user_input=input("Type 'exit' to return: ").strip().lower()
-        if user_input == "exit":
+        user_input=input("Type 'exit' to return: ")
+        if user_input.lower() == "exit":
             print("")
             break
         else:
@@ -62,12 +62,13 @@ def sushi_minigame():
         print("Your collection is empty! Roll some gacha first to get sushi.")
         return
     print("🎮 Welcome to the Sushi Mini-Game! 🎮")
-    print("You have 60 seconds to match/type sushi name.")
+    print("You have 60 seconds to match and type sushi name.")
     print("Each correct match earns combos")
     print("Type 'exit' any time you want to leave")
-    game_duration=60
     reward_money=2
     reward_xp=10
+    total_xp = 0
+    total_money = 0
     streak=0
     all_sushi_list = ["Salmon", "Maguro", "California Roll", "Ebi", "Bintoro", "Inari", "Tamago", "Tako", "Ika", "Hamachi", "Harasu", "Taramayo", "Maguroyuke", "Saba", "Kani", "Anago", "Akagai", "Katsuo", "Ankimo", "Engawa", "Iwashi", "Ikura", "Hotate", "Buri", "Fugu", "Aji", "Awabi", "Kaibashira", "Chutoro", "Madai", "Uni", "Ootoro", "Unagi"]
     sushi_names=list(player_collection.keys())
@@ -75,33 +76,37 @@ def sushi_minigame():
     for i, sushi in enumerate(sushi_names, 1):
         print(f"{i}. {sushi}")
     while True:
-        choice=input("Which sushi do you want to level up? Enter the number: ").strip()
+        choice=input("Which sushi do you want to level up? Enter the number: ")
         if choice.isdigit() and 1 <= int(choice) <= len(sushi_names):
             selected_sushi = sushi_names[int(choice) - 1]
             print(f"You selected {selected_sushi} to level up.")
             break
         else:
             print("Invalid choice. Please enter a valid number.")
-    print("Starting game... Match the sushi names!(Capitalization Matters)")
+    print("Ok, Start NOW!!!")
     start_time=time.time()
-    while time.time()-start_time<game_duration:
+    while time.time()-start_time<60:
         streak_bonus=1+(streak)*(streak)*0.1
         target_sushi=random.choice(all_sushi_list)
+        print("")
         print(f"Match this sushi: {target_sushi}")
         user_input = input("Your answer: ").strip()
         if user_input.lower() == "exit":
             print("Exiting Sushi Matcher. Good job!")
             break
-        if user_input == target_sushi:
+        if user_input.lower() == target_sushi.lower():
             earned_money=int(reward_money*streak_bonus)
             earned_xp=int(reward_xp*streak_bonus)
             money+=earned_money
+            total_money += earned_money
+            total_xp += earned_xp
             print(f"Correct! You earned ${earned_money} and {earned_xp} XP!")
             streak += 1
         else:
             print("Wrong!")
             streak=0
-    print(f"Time's up! You earned a total of {earned_xp} XP for {selected_sushi} and ${money}.")
+    print(f"Time's up! You earned a total of {total_xp} XP for {selected_sushi} and ${total_money}.")
+    print(f"You now have a total of ${money}")
     add_xp(selected_sushi, earned_xp)
 def Sushi():
     global money
@@ -113,15 +118,15 @@ def Sushi():
         print("1. Roll gacha")
         print("2. View your collection")
         print("3. Play Sushi game to earn money")
-        choice = input("What do you want to do? ").strip()
+        choice=input("What do you want to do?")
         print("")
         if choice == "1":
-            max_rolls = money // 100
+            max_rolls=money//100
             if max_rolls <= 0:
                 print("You don't have enough money to roll!")
                 continue
             while True:
-                rolls = input(f"How many rolls would you like? $100 per sushi! (Max: {max_rolls}) ").strip()
+                rolls = input(f"How many rolls would you like? $100 per sushi! (Max: {max_rolls}) ")
                 if rolls.isdigit() and 0 < int(rolls) <= max_rolls:
                     rolls = int(rolls)
                     break
