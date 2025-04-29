@@ -107,7 +107,7 @@ def sushi_minigame():
             streak=0
     print(f"Time's up! You earned a total of {total_xp} XP for {selected_sushi} and ${total_money}.")
     print(f"You now have a total of ${money}")
-    add_xp(selected_sushi, earned_xp)
+    add_xp(selected_sushi, total_xp)
 def Sushi():
     global money
     print("")
