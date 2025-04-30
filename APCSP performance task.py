@@ -18,7 +18,7 @@ droprates={
     "Godly": 1
 }
 player_collection={}
-def wait_exit():
+def wait_exit(): #waits till exit is typed
     while True:
         user_input=input("Type 'exit' to return: ")
         if user_input.lower() == "exit":
@@ -26,7 +26,7 @@ def wait_exit():
             break
         else:
             print("Invalid input. Type 'exit' to go back.")
-def add_xp(sushi,xp_gain):
+def add_xp(sushi,xp_gain): 
     sushi_data=player_collection[sushi]
     sushi_data["xp"]+=xp_gain
     initial=sushi_data["lv"]
@@ -56,9 +56,9 @@ def show_collection(collection):
             xp_required=10*(2**(data["lv"]-1))
             print(f"{sushi}: Level {data['lv']} (XP: {data['xp']}/{xp_required})")
     wait_exit()
-def sushi_minigame():
+def sushi_minigame(): #the typing minigame
     global money, player_collection
-    if not player_collection:
+    if not player_collection: #checks if player has nothing in collection
         print("Your collection is empty! Roll some gacha first to get sushi.")
         return
     print("🎮 Welcome to the Sushi Mini-Game! 🎮")
@@ -73,10 +73,10 @@ def sushi_minigame():
     all_sushi_list = ["Salmon", "Maguro", "California Roll", "Ebi", "Bintoro", "Inari", "Tamago", "Tako", "Ika", "Hamachi", "Harasu", "Taramayo", "Maguroyuke", "Saba", "Kani", "Anago", "Akagai", "Katsuo", "Ankimo", "Engawa", "Iwashi", "Ikura", "Hotate", "Buri", "Fugu", "Aji", "Awabi", "Kaibashira", "Chutoro", "Madai", "Uni", "Ootoro", "Unagi"]
     sushi_names=list(player_collection.keys())
     print("Your Sushi Collection:")
-    for i, sushi in enumerate(sushi_names, 1):
+    for i, sushi in enumerate(sushi_names, 1): #shows the lists of all the sushi you own
         print(f"{i}. {sushi}")
     while True:
-        choice=input("Which sushi do you want to level up? Enter the number: ")
+        choice=input("Which sushi do you want to level up? Enter the number: ") #which sushi you want to lv up
         if choice.isdigit() and 1 <= int(choice) <= len(sushi_names):
             selected_sushi = sushi_names[int(choice) - 1]
             print(f"You selected {selected_sushi} to level up.")
@@ -85,7 +85,7 @@ def sushi_minigame():
             print("Invalid choice. Please enter a valid number.")
     print("Ok, Start NOW!!!")
     start_time=time.time()
-    while time.time()-start_time<60:
+    while time.time()-start_time<60: #find the difference in time to show it's been 60 seconds
         streak_bonus=1+(streak)*(streak)*0.1
         target_sushi=random.choice(all_sushi_list)
         print("")
@@ -94,7 +94,7 @@ def sushi_minigame():
         if user_input.lower() == "exit":
             print("Exiting Sushi Matcher. Good job!")
             break
-        if user_input.lower() == target_sushi.lower():
+        if user_input.lower() == target_sushi.lower(): #checks if same word
             earned_money=int(reward_money*streak_bonus)
             earned_xp=int(reward_xp*streak_bonus)
             money+=earned_money
@@ -108,7 +108,7 @@ def sushi_minigame():
     print(f"Time's up! You earned a total of {total_xp} XP for {selected_sushi} and ${total_money}.")
     print(f"You now have a total of ${money}")
     add_xp(selected_sushi, total_xp)
-def Sushi():
+def Sushi(): #the whole game
     global money
     print("")
     print("🍣Welcome to Kaitenzushi Gacha!🍣")
